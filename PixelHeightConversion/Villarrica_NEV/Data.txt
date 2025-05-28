@@ -1,4 +1,4 @@
-Matrix_1.txt 	0.0
-Matrix_2.txt 	45.0
-Matrix_3.txt 	90.0
+Matrix_1.txt 	150.0
+Matrix_2.txt 	165.0
+Matrix_3.txt 	180.0
 Perpendicular 	167.19297272758524

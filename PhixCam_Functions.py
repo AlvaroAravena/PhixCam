@@ -773,11 +773,11 @@ def plot_pix_height( image , height_pix , height_pix_stats , height_pix_max , li
 		plt.show()
 		plt.imshow( cv2.cvtColor( image , cv2.COLOR_BGR2RGB ) , alpha = 0.3 )
 		if( np.max( height_pix_stats[:,:,1] ) > 500 ):
-			levs = [ 10 , 50 , 100 , 500 , 1000 , 5000 ]
+			levs = [ 30 , 50 , 100 , 500 , 1000 , 5000 ]
 		elif( np.max( height_pix_stats[:,:,1] ) > 50 ):
-			levs = [ 1 , 5 , 10 , 50 , 100 , 500 ]
+			levs = [ 3 , 5 , 10 , 50 , 100 , 500 ]
 		elif( np.max( height_pix_stats[:,:,1] ) > 5 ):
-			levs = [ 0.1 , 0.5 , 1 , 5 , 10 , 50 ]	
+			levs = [ 0.3 , 0.5 , 1 , 5 , 10 , 50 ]	
 		CS = plt.contour( height_pix_stats[:,:,1] , levels = levs , colors = colortype )
 		plt.clabel( CS , fontsize = 10 , colors = colortype )
 		plt.title( 'Std' )
