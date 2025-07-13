@@ -1,4 +1,4 @@
-from tkinter import END, Tk , ttk , Label , Button , W , E , Entry , OptionMenu , StringVar , DoubleVar , IntVar , Canvas , Scrollbar , VERTICAL , Frame , messagebox , filedialog
+from tkinter import END, Tk , ttk , Label , Button , W , E , Entry , OptionMenu , StringVar , DoubleVar , IntVar , Canvas , Scrollbar , VERTICAL , Frame , messagebox , filedialog , simpledialog
 from PhixCam_Functions import get_profile_deg , get_profile_utm , import_map , read_map_deg , read_map_utm , plot_deg , plot_utm , load_profile, load_profile_border, load_comparison , find_profile, renormalize, pix_height , plot_pix_height , create_border_line, load_pix_height, angular_ranges
 import numpy as np
 import matplotlib.pyplot as plt
@@ -399,7 +399,7 @@ class MainFrame:
 		plt.show()
 		
 	def load_image( self ):
-		file_path = filedialog.askopenfilename( title="Select image file", filetypes=[("Image files", "*.png *.jpg ")])
+		file_path = filedialog.askopenfilename( title="Select image file", filetypes=[("Image files", "*.png *.jpg *.tiff *.jpeg")])
 		self.image = cv2.imread( file_path )
 		self.image_available = 1
 		self.enabled_disabled()
@@ -511,7 +511,8 @@ class MainFrame:
 		messagebox.showinfo( title = None , message = "Matrices created successfully" )
 
 	def plot_pixheight( self ):
-		plot_pix_height( self.image , self.pix_matrices , self.pix_matrices_stats , self.pix_matrices_max , self.list_planes )
+		height_vent_plot = simpledialog.askfloat( "Vent altitude" , prompt = "Please indicate vent altitud (m a.s.l.). Set 0 to plot results in terms of height above sea level." , initialvalue = 0 )
+		plot_pix_height( self.image , self.pix_matrices , self.pix_matrices_stats , self.pix_matrices_max , self.list_planes , height_vent_plot )
 		
 	def enabled_disabled( self ):
 		if( self.source_dem_choice == 1 ):

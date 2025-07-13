@@ -737,7 +737,7 @@ def pix_height( foldername , plane_1 , plane_2 , nplanes , maxhor , maxhei , min
 def set_levels( range_val ):
 	mh = 50000.0
 	if( range_val > 3000 ):
-		return np.arange( 0 , mh , 500 )
+		levs = np.arange( 0 , mh , 500 )
 	elif( range_val > 1500 ):
 		levs = np.arange( 0 , mh , 250 )
 	elif( range_val > 300 ):
@@ -748,26 +748,27 @@ def set_levels( range_val ):
 		levs = np.arange( 0 , mh , 5 )
 	else:
 		levs = np.arange( 0 , mh , 1 )
+	return levs
 
-def plot_pix_height( image , height_pix , height_pix_stats , height_pix_max , list_planes ):
+def plot_pix_height( image , height_pix , height_pix_stats , height_pix_max , list_planes , vent_height ):
 	colortype = 'k'
 	plt.imshow( cv2.cvtColor( image , cv2.COLOR_BGR2RGB ) , alpha = 0.3 )
-	levs = set_levels( np.nanmax( height_pix_max ) - np.nanmin( height_pix_max ) )
-	CS = plt.contour( height_pix_max , levels = levs , colors = colortype )
+	levs = set_levels( np.nanmax( height_pix_max - vent_height ) - np.nanmin( height_pix_max - vent_height ) )
+	CS = plt.contour( height_pix_max - vent_height , levels = levs , colors = colortype )
 	plt.clabel( CS , fontsize = 10 , colors = colortype )
 	plt.title( 'Perpendicular (' + str( round( float( list_planes[-1] ) , 3 ) ) + ')' )
 	plt.show()
 	for i in range( len( list_planes ) - 1 ):
 		plt.imshow( cv2.cvtColor( image , cv2.COLOR_BGR2RGB ) , alpha = 0.3 )
-		levs = set_levels( np.nanmax( height_pix[:,:,i] ) - np.nanmin( height_pix[:,:,i] ) )
-		CS = plt.contour( height_pix[:,:,i] , levels = levs , colors = colortype )
+		levs = set_levels( np.nanmax( height_pix[:,:,i] - vent_height ) - np.nanmin( height_pix[:,:,i] - vent_height ) )
+		CS = plt.contour( height_pix[:,:,i] - vent_height , levels = levs , colors = colortype )
 		plt.clabel( CS , fontsize = 10 , colors = colortype )
 		plt.title( str( round( float( list_planes[i] ) , 3 ) ) )
 		plt.show()
 	if( len( list_planes ) - 1 > 1 ):
 		plt.imshow( cv2.cvtColor( image , cv2.COLOR_BGR2RGB ) , alpha = 0.3 )
-		levs = set_levels( np.nanmax( height_pix_stats[:,:,0] ) - np.nanmin( height_pix_stats[:,:,0] ) )
-		CS = plt.contour( height_pix_stats[:,:,0] , levels = levs , colors = colortype )
+		levs = set_levels( np.nanmax( height_pix_stats[:,:,0] - vent_height ) - np.nanmin( height_pix_stats[:,:,0] - vent_height ) )
+		CS = plt.contour( height_pix_stats[:,:,0] - vent_height , levels = levs , colors = colortype )
 		plt.clabel( CS , fontsize = 10 , colors = colortype )
 		plt.title( 'Average' )
 		plt.show()
@@ -777,7 +778,7 @@ def plot_pix_height( image , height_pix , height_pix_stats , height_pix_max , li
 		elif( np.max( height_pix_stats[:,:,1] ) > 50 ):
 			levs = [ 3 , 5 , 10 , 50 , 100 , 500 ]
 		elif( np.max( height_pix_stats[:,:,1] ) > 5 ):
-			levs = [ 0.3 , 0.5 , 1 , 5 , 10 , 50 ]	
+			levs = [ 0.3 , 0.5 , 1 , 5 , 10 , 50 ]
 		CS = plt.contour( height_pix_stats[:,:,1] , levels = levs , colors = colortype )
 		plt.clabel( CS , fontsize = 10 , colors = colortype )
 		plt.title( 'Std' )
@@ -789,8 +790,8 @@ def plot_pix_height( image , height_pix , height_pix_stats , height_pix_max , li
 		counter2 = 2
 		for i in percentiles:
 			plt.imshow( cv2.cvtColor( image , cv2.COLOR_BGR2RGB ) , alpha = 0.3 )
-			levs = set_levels( np.nanmax( height_pix_stats[:,:,counter2] ) - np.nanmin( height_pix_stats[:,:,counter2] ) )
-			CS = plt.contour( height_pix_stats[:,:,counter2] , levels = levs , colors = colortype )
+			levs = set_levels( np.nanmax( height_pix_stats[:,:,counter2] - vent_height ) - np.nanmin( height_pix_stats[:,:,counter2] - vent_height ) )
+			CS = plt.contour( height_pix_stats[:,:,counter2] - vent_height , levels = levs , colors = colortype )
 			plt.clabel( CS , fontsize = 10 , colors = colortype )
 			plt.title( 'Percentile ' + str(i) )
 			plt.show()
