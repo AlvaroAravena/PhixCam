@@ -414,7 +414,7 @@ class MainFrame:
 	def load_border( self ):
 		file_path = filedialog.askopenfilename( initialdir = "ReferenceProfiles" , title = "Select reference profile file", filetypes=[("Text files", "*.txt")])
 		[ self.borderx , self.bordery ] = load_profile_border( file_path )
-		self.image =cv2.imread( file_path.replace( 'txt' , 'png' ) )
+		self.image = cv2.imread( file_path.replace( 'txt' , 'png' ) )
 		self.referenceprofile_available = 1
 		self.image_available = 1
 		self.enabled_disabled()

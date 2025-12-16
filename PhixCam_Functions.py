@@ -48,7 +48,8 @@ def interpol_pos( lon1 , lat1 , step_lon_deg , step_lat_deg , lon_cen , lat_cen 
 	f1 = ( y2 - y1 ) * ( z3 - z1 ) - ( y3 - y1 ) * ( z2 - z1 )
 	f2 = ( z2 - z1 ) * ( x3 - x1 ) - ( z3 - z1 ) * ( x2 - x1 )
 	f3 = ( x2 - x1 ) * ( y3 - y1 ) - ( x3 - x1 ) * ( y2 - y1 )
-
+	if( np.isnan( ( ( - aux_lon * f1 - aux_lat * f2 ) / f3 + dc ) ) ):
+		return -9999
 	return ( ( - aux_lon * f1 - aux_lat * f2 ) / f3 + dc )
 
 def import_map( toponame , lon , lat ):
@@ -368,10 +369,10 @@ def get_profile_deg( run_name , points , lon , lat , lon1 , lon2 , lat1 , lat2 ,
 	camutm = utm.from_latlon( cam[ 1 ] , cam[ 0 ] )
 	angles = np.arange( - 1 * ang1 + 90.0 , - 1 * ang2 + 90.0 , -1.0 * step_angles )
 	angles = angles * np.pi / 180.0
-	verangles = np.arange( 0.0 , 90.0 , step_angles )
+	verangles = np.arange( -10.0 , 90.0 , step_angles )
 	verangles = verangles * np.pi / 180.0
 	tanverangles = np.tan( verangles )
-	verangles_2 = np.arange( 0.0 , 90.0 , -0.1 )
+	verangles_2 = np.arange( -10.0 , 90.0 , -0.1 )
 	verangles_2 = verangles_2 * np.pi / 180.0
 	datview = np.zeros( len( angles ) )
 	for i in range( len( angles ) ):
@@ -415,10 +416,10 @@ def get_profile_utm( run_name , points , east , north , east_cor , north_cor , c
 	camutm = [ east , north ]
 	angles = np.arange( - 1 * ang1 + 90.0 , - 1 * ang2 + 90.0 , -1.0 * step_angles )
 	angles = angles * np.pi / 180.0
-	verangles = np.arange( 0.0 , 90.0 , step_angles )
+	verangles = np.arange( -10.0 , 90.0 , step_angles )
 	verangles = verangles * np.pi / 180.0
 	tanverangles = np.tan( verangles )
-	verangles_2 = np.arange( 0.0 , 90.0 , -0.1 )
+	verangles_2 = np.arange( -10.0 , 90.0 , -0.1 )
 	verangles_2 = verangles_2 * np.pi / 180.0
 	datview = np.zeros( len( angles ) )
 	for i in range( len( angles ) ):
